@@ -26,7 +26,7 @@ binary_options = '--in-place'
 binary = 'autopep8'
 binary_options = '--in-place --aggressive --aggressive --max-line-length 80'
 
-binary = 'yapf'
+binary = 'yapf3'
 binary_options = "--in-place --style google"
 
 tempfile = '/tmp/pyformat'
@@ -53,10 +53,11 @@ def main():
     # Update buffer with new lines.
     sequence = difflib.SequenceMatcher(None, vim.current.buffer, lines)
     for op in reversed(sequence.get_opcodes()):
-        if op[0] is not 'equal':
+        if op[0] != 'equal':
             vim.current.buffer[op[1]:op[2]] = lines[op[3]:op[4]]
 
     # cleanup
     os.remove(tempfile)
+
 
 main()

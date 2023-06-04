@@ -7,12 +7,20 @@ function dotenv_configure(){
   perl -i -pe \
        'BEGIN{undef $/;} s/###BEGIN_ADD_BASHRC.*?###END_ADD_BASHRC//smg' \
          "${HOME}/.bashrc"
-  cat "${__dir_script}/bash/bashrc.sh" >> "${HOME}/.bashrc"
+  cat "${__dir_script}/bash/.bashrc" >> "${HOME}/.bashrc"
 
   # Add custom inputrc (arrow support).
   cp "${__dir_script}/bash/inputrc" "${HOME}/.inputrc"
 
   # Configure vim.
+  # Install Python formatting.
+  sudo apt-get install --assume-yes \
+    black \
+    python3-autopep8 \
+    python3-yapf \
+    vim-autopep8 \
+    yapf3
+
   # Install vundle.
   mkdir --parents "${HOME}/.vim/bundle"
   git clone https://github.com/VundleVim/Vundle.vim.git "${HOME}/.vim/bundle/vundle.vim"
@@ -22,11 +30,12 @@ function dotenv_configure(){
        'BEGIN{undef $/;} s/"""BEGIN_ADD_VIMRC.*?"""END_ADD_VIMRC//smg' \
          "${HOME}/.vimrc"
   cat "${__dir_script}/vim/.vimrc" >> "${HOME}/.vimrc"
-  sudo sh -c "cat ${__dir_script}/vim/cpp.vim >> /usr/share/vim/vim74/syntax/cpp.vim"
+  sudo sh -c "cat ${__dir_script}/vim/cpp.vim >> /usr/share/vim/vim81/syntax/cpp.vim"
 
   # Configure py-format.
   sudo mkdir --parents /usr/lib/py-format
-  cp "${__dir_script}/vim/py-format.py" /usr/lib/py-format/py-format.py
+  sudo cp "${__dir_script}/vim/py-format.py" /usr/lib/py-format/py-format.py
+  sudo chown a+x /usr/lib/py-format/py-format.py
 
   # Set vim defaults.
   sudo update-alternatives --install /usr/bin/editor editor /usr/bin/vim 1

@@ -163,7 +163,7 @@ hi LineNr ctermfg=242
 " Format Python files.
 :function FormatPY()
 :  let l:lines="all"
-:  pyf /usr/lib/py-format/py-format.py
+:  py3f /usr/lib/py-format/py-format.py
 :endfunction
 
 " Use code formatters with Ctrl+K and when saving files
@@ -171,7 +171,7 @@ hi LineNr ctermfg=242
 :  let l:lines="all"
 :  if (&ft == 'python')
 :    :echo "Formatting Python..."
-:    :FormatPY
+:    :call FormatPY()
 :  else
 :    :echo "Formatting C++..."
 :    py3f /usr/lib/clang-format/clang-format.py
