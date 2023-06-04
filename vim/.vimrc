@@ -160,12 +160,18 @@ hi PmenuSel ctermfg=16 ctermbg=15 guifg=#ffffff guibg=#000080 gui=bold
 " Vim line numbers
 hi LineNr ctermfg=242
 
+" Format Python files.
+:function FormatPY()
+:  let l:lines="all"
+:  pyf /usr/lib/py-format/py-format.py
+:endfunction
+
 " Use code formatters with Ctrl+K and when saving files
 :function FormatFile()
 :  let l:lines="all"
 :  if (&ft == 'python')
 :    :echo "Formatting Python..."
-:    :FormatCode
+:    :FormatPY
 :  else
 :    :echo "Formatting C++..."
 :    py3f /usr/lib/clang-format/clang-format.py
